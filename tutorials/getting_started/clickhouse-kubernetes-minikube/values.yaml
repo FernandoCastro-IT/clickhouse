@@ -1,0 +1,52 @@
+# values.yaml for Bitnami ClickHouse Helm Chart on Minikube
+
+# Global settings (can be overridden by specific component settings)
+global:
+  storageClass: "" # Use default storage class provided by Minikube
+
+# ClickHouse specific settings
+replicaCount: 1 # Single replica for simplicity in Minikube tutorial
+
+auth:
+  username: user # Default username
+  password: "Password123" # Set a default password (user should change this)
+  # Alternatively, use existingSecret: <secret-name>
+
+# Persistence settings
+persistence:
+  enabled: true
+  storageClass: "" # Use default storage class provided by Minikube
+  size: 2Gi # Small size suitable for Minikube tutorial
+
+# Resource settings (adjust based on Minikube resources)
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi
+    cpu: 500m
+
+# ClickHouse Keeper settings (relevant if replicaCount > 1 or sharding enabled)
+keeper:
+  enabled: false # Disable Keeper for single-replica setup
+
+# Service settings
+service:
+  type: ClusterIP # Default, suitable for port-forwarding or in-cluster access
+  port: 8123 # Default HTTP port
+  tcpPort: 9000 # Default TCP port
+
+# Disable metrics for simplicity in this tutorial
+metrics:
+  enabled: false
+
+# Set image tag explicitly for reproducibility (optional, but good practice)
+# image:
+#   tag: <specific-version> # e.g., 24.3.3
+
+# Add any other specific configurations needed for the tutorial
+# For example, if specific config.d or users.d files are needed,
+# they can be added via configdFiles or usersdFiles parameters.
+# For this basic deployment, we'll rely on chart defaults + auth/persistence.
+
